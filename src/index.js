@@ -6,9 +6,38 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import rootReducer from './reducers'
+import {
+    addTodo,
+    toggleTodo,
+    setVisibilityFilter,
+    VisibilityFilter
+  } from './actions'
+  
 
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
+
+
+
+// Log the initial state
+console.log(store.getState())
+
+// Every time the state changes, log it
+// Note that subscribe() returns a function for unregistering the listener
+const unsubscribe = store.subscribe(() => console.log(store.getState()))
+
+// Dispatch some actions
+store.dispatch(addTodo('Learn about actions'))
+store.dispatch(addTodo('Learn about reducers'))
+store.dispatch(addTodo('Learn about store'))
+store.dispatch(toggleTodo(0))
+store.dispatch(toggleTodo(2))
+store.dispatch(setVisibilityFilter(VisibilityFilter.SHOW_COMPLETED))
+
+unsubscribe()
+
+
+
 
 ReactDOM.render(<Provider store={store}>
                     <App />
